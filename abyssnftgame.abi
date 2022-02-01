@@ -1,0 +1,172 @@
+{
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT ",
+    "version": "eosio::abi/1.2",
+    "types": [],
+    "structs": [
+        {
+            "name": "daily_questv2",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "username",
+                    "type": "string"
+                },
+                {
+                    "name": "quest_id",
+                    "type": "int32"
+                },
+                {
+                    "name": "clear_count",
+                    "type": "int32"
+                },
+                {
+                    "name": "last_cleared",
+                    "type": "time_point_sec"
+                }
+            ]
+        },
+        {
+            "name": "dailyclear",
+            "base": "",
+            "fields": []
+        },
+        {
+            "name": "dailyquest",
+            "base": "",
+            "fields": [
+                {
+                    "name": "from",
+                    "type": "name"
+                },
+                {
+                    "name": "sig",
+                    "type": "string"
+                },
+                {
+                    "name": "data",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "mintnft",
+            "base": "",
+            "fields": [
+                {
+                    "name": "from",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "nft",
+            "base": "",
+            "fields": [
+                {
+                    "name": "collection",
+                    "type": "string"
+                },
+                {
+                    "name": "schema",
+                    "type": "string"
+                },
+                {
+                    "name": "template_id",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "nft_registerv1",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "nft",
+                    "type": "nft[]"
+                }
+            ]
+        },
+        {
+            "name": "regnft",
+            "base": "",
+            "fields": [
+                {
+                    "name": "from",
+                    "type": "name"
+                },
+                {
+                    "name": "collection",
+                    "type": "string"
+                },
+                {
+                    "name": "schema",
+                    "type": "string"
+                },
+                {
+                    "name": "template_id",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "regnftclear",
+            "base": "",
+            "fields": []
+        }
+    ],
+    "actions": [
+        {
+            "name": "dailyclear",
+            "type": "dailyclear",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "dailyquest",
+            "type": "dailyquest",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "mintnft",
+            "type": "mintnft",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "regnft",
+            "type": "regnft",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "regnftclear",
+            "type": "regnftclear",
+            "ricardian_contract": ""
+        }
+    ],
+    "tables": [
+        {
+            "name": "dailyquest",
+            "type": "daily_questv2",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "nftstore",
+            "type": "nft_registerv1",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        }
+    ],
+    "kv_tables": {},
+    "ricardian_clauses": [],
+    "variants": [],
+    "action_results": []
+}
