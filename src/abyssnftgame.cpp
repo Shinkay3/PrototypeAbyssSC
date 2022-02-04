@@ -5,34 +5,57 @@
 #include <xoshiro/XoshiroCpp.hpp>
 #include <atomicassets/atomicassets-interface.hpp>
 
-ACTION abyssnftgame::mintnft(name from)
+ACTION abyssnftgame::mintnft(name from, name collection, name schema, int32_t template_id)
 {
-  struct asset_s {
-  } payload;
+  require_auth(from);
+  bool exists = false;
 
-  int32_t template_id = 307868;
-  int32_t asset_id = 1099526395482;
-  
-  action(
-    permission_level(get_self(), "active"_n),
-    "atomicassets"_n,
-    "mintasset"_n,
-    std::make_tuple(
-      get_self(), // authorized_minter
-      "abyssnftgame"_n, // collection_name
-      "spirits"_n, // schema_name
-      307868, // template_id
-      "abyssnftgame"_n, // new_asset_owner
-      std::map<std::string, atomicassets::ATOMIC_ATTRIBUTE>(), // immutable_data
-      std::map<std::string, atomicassets::ATOMIC_ATTRIBUTE>(), // mutable_data
-      std::vector<asset>() // tokens_to_back
-    )
-  ).send();
-  
+  nft vnft = {collection.to_string(),schema.to_string(),template_id};
+
+  nft_register_table nft_register(get_self(), get_self().value);
+  auto msg = nft_register.find(from.value);
+  if(msg == nft_register.end())
+  {
+    check(false, "User was not found");
+  }
+  else
+  {
+    nft_register.modify(msg, from, [&](auto& msg) { //Find the user.
+
+      
+      auto msg2 = std::find_if(msg.nft.begin(),msg.nft.end(),[template_id, collection, schema](const nft aa) //Find for specific NFT from the user.
+      {
+        return (aa.template_id == template_id) 
+        && (aa.collection == collection.to_string())
+        && (aa.schema == schema.to_string());
+      });
+
+      check(msg2 != msg.nft.end(), "NFT was not found");
+      msg.nft.erase(msg2); //remove NFT from table.
+      
+      action(
+        permission_level(get_self(), "active"_n),
+        "atomicassets"_n,
+        "mintasset"_n,
+        std::make_tuple(
+          get_self(), // authorized_minter
+          collection, // collection_name
+          schema, // schema_name
+          template_id, // template_id
+          from, // new_asset_owner
+          std::map<std::string, atomicassets::ATOMIC_ATTRIBUTE>(), // immutable_data
+          std::map<std::string, atomicassets::ATOMIC_ATTRIBUTE>(), // mutable_data
+          std::vector<asset>() // tokens_to_back
+        )
+      ).send();
+      
+
+    });
+  }
 }
 
 
-void abyssnftgame::regnft(name from, std::string collection, std::string schema, std::string template_id)
+void abyssnftgame::regnft(name from, std::string collection, std::string schema, int32_t template_id)
 {
   nft_register_table nft_register(get_self(), get_self().value);
   auto msg = nft_register.find(from.value);
@@ -47,11 +70,8 @@ void abyssnftgame::regnft(name from, std::string collection, std::string schema,
   else
   {
     nft_register.modify(msg, from, [&](auto& msg) {
+
       msg.nft.push_back({collection,schema, template_id});
-      for (int i = 0; i < 10; ++i)
-      {
-        msg.nft.push_back({collection, schema, template_id});
-      }
 
     });
   }
@@ -105,9 +125,8 @@ ACTION abyssnftgame::dailyquest(name from, std::string sig_in_hex, std::string d
 
   if(dist(rng) < 5000)
   {
-    regnft(from,"aa","bb","cc");
-    
-
+    regnft(from,"abyssnftgame","spirits",307868);
+  
     //tuple<name,std::string,std::string> test;
     //test = {from, "abyssnftgame", "spirits"};
     //action(

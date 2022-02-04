@@ -9,9 +9,10 @@ CONTRACT abyssnftgame : public contract {
   public:
     using contract::contract;
 
-    ACTION regnft(name from,string collection, string schema, string template_id);
+
+    ACTION regnft(name from,string collection, string schema, int32_t template_id);
     ACTION regnftclear();
-    ACTION mintnft(name from);
+    ACTION mintnft(name from, name collection, name schema, int32_t template_id);
 
 
     ACTION dailyquest(name from, string sig, string data);
@@ -23,7 +24,8 @@ CONTRACT abyssnftgame : public contract {
 
     struct nft
     {
-      string collection, schema, template_id;
+      string collection, schema;
+      int32_t template_id;
     };
 
     TABLE nft_registerv1

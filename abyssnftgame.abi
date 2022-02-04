@@ -59,6 +59,18 @@
                 {
                     "name": "from",
                     "type": "name"
+                },
+                {
+                    "name": "collection",
+                    "type": "name"
+                },
+                {
+                    "name": "schema",
+                    "type": "name"
+                },
+                {
+                    "name": "template_id",
+                    "type": "int32"
                 }
             ]
         },
@@ -76,7 +88,7 @@
                 },
                 {
                     "name": "template_id",
-                    "type": "string"
+                    "type": "int32"
                 }
             ]
         },
@@ -112,7 +124,7 @@
                 },
                 {
                     "name": "template_id",
-                    "type": "string"
+                    "type": "int32"
                 }
             ]
         },
